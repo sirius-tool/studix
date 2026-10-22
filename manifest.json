@@ -1,0 +1,31 @@
+{
+  "id": "./",
+  "name": "STUDIX — 学びを、もっと自由に、もっと前へ。",
+  "short_name": "STUDIX",
+  "description": "学習計画・課題・学習記録をまとめて管理する学習サポートアプリ。",
+  "lang": "ja-JP",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f6f8fc",
+  "theme_color": "#0b1b34",
+  "categories": [
+    "education",
+    "productivity"
+  ],
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

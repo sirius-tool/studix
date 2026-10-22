@@ -1,0 +1,13 @@
+name = "studix-push-api"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "studix-push"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+
+[triggers]
+# Runs hourly; reminders are checked at the top of each Japan-time hour.
+crons = ["0 * * * *"]
