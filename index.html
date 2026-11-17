@@ -615,6 +615,34 @@ input,select,textarea{background:var(--card);border-color:var(--bd)}
 .pwa-install-note button{margin-top:10px;padding:5px 10px;font-size:12px}
 @media(max-width:680px){.pwa-install-btn{right:12px;bottom:12px;padding:11px 14px;font-size:13px}.pwa-install-note{right:12px;bottom:68px}}
 
+
+/* STUDIX AI: official blue / purple / navy identity */
+.ai-shell{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(260px,.75fr);gap:18px;align-items:start}
+.ai-panel{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:22px;box-shadow:var(--shadow);min-width:0}
+.ai-heading{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.ai-mark{width:44px;height:44px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(145deg,#4f8dff,#9275f5);color:#fff;font-size:22px;box-shadow:0 7px 18px #6c7ff329}
+.ai-heading h3{margin:0;font-size:18px;color:var(--tx)}
+.ai-muted{color:var(--sub);font-size:13px;margin:0 0 16px}
+.ai-chat-log{height:360px;overflow:auto;border:1px solid var(--bd);border-radius:14px;padding:14px;background:color-mix(in srgb,var(--bg) 65%,var(--card));display:flex;flex-direction:column;gap:12px}
+.ai-msg{max-width:92%;padding:11px 13px;border-radius:14px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7;font-size:14px}
+.ai-msg.bot{align-self:flex-start;background:var(--card);border:1px solid var(--bd);border-top-left-radius:5px}
+.ai-msg.user{align-self:flex-end;background:linear-gradient(135deg,#4f8dff,#8069e8);color:white;border-top-right-radius:5px}
+.ai-chat-form{display:flex;gap:8px;margin-top:12px;align-items:stretch}
+.ai-chat-form textarea{min-height:52px;max-height:150px;resize:vertical;flex:1;width:100%;background:var(--card)}
+.ai-chat-form button{flex:none;min-width:88px}
+.ai-status{font-size:12px;color:var(--sub);min-height:20px;margin:8px 0 0}
+.ai-form-grid{display:grid;gap:12px}
+.ai-form-grid label{display:grid;gap:6px;align-items:start}
+.ai-form-grid input,.ai-form-grid textarea,.ai-form-grid select{width:100%;background:var(--card)}
+.ai-preview{display:grid;gap:8px;margin-top:14px}
+.ai-plan-row{padding:12px;border:1px solid var(--bd);border-radius:12px;background:var(--card)}
+.ai-plan-row strong{display:block;font-size:14px}
+.ai-plan-row small{display:block;color:var(--sub);margin-top:4px}
+.ai-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.ai-disclaimer{font-size:11px;color:var(--sub);line-height:1.6;margin-top:14px}
+@media(max-width:850px){.ai-shell{grid-template-columns:1fr}.ai-chat-log{height:320px}}
+@media(max-width:520px){.ai-panel{padding:16px}.ai-chat-form{flex-direction:column}.ai-chat-form button{width:100%}.ai-chat-log{height:300px}}
+
 </style><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 48 48%22%3E%3Crect width=%2248%22 height=%2248%22 rx=%2210%22 fill=%22%230b1b34%22/%3E%3Cpath d=%22M8 13 24 4 40 13 24 22Z%22 fill=%22%234f8dff%22/%3E%3Cpath d=%22M8 13v9l16 9 16-9v-9L24 22Z%22 fill=%22%23dbe8ff%22/%3E%3Cpath d=%22M8 30 24 39 40 30v-8L24 31 8 22Z%22 fill=%22%239275f5%22/%3E%3C/svg%3E"></head>
 <body><div class="app">
 <nav>
@@ -627,7 +655,7 @@ input,select,textarea{background:var(--card);border-color:var(--bd)}
 <button data-go="scores">テスト・模試</button>
 <button data-go="schedule">テスト日程</button>
 <button data-go="memos">メモ</button>
-<button data-go="notifications">通知設定</button>
+<button data-go="ai">AI先生</button>
 </nav>
 <main>
 
@@ -789,6 +817,33 @@ input,select,textarea{background:var(--card);border-color:var(--bd)}
 </div>
 </section>
 
+
+<section id="ai" class="view" hidden>
+ <div class="page-intro"><div><h2 class="pt">STUDIX AI先生</h2><p>わからない問題を質問したり、自分に合う勉強計画を考えたりしよう。</p></div><svg class="page-art" viewBox="0 0 140 110" aria-hidden="true"><path d="M70 12 112 36 70 60 28 36Z" fill="#4f8dff"/><path d="M28 36v24l42 24 42-24V36L70 60Z" fill="#dbe8ff"/><path d="M28 66v12l42 24 42-24V66L70 90Z" fill="#9275f5"/><path d="M28 36 70 60 112 36" fill="none" stroke="#0b1b34" stroke-width="3"/></svg></div>
+ <div class="ai-shell">
+  <div class="ai-panel">
+   <div class="ai-heading"><div class="ai-mark" aria-hidden="true">✦</div><div><h3>AI先生に質問</h3><div class="ai-muted" style="margin:2px 0 0">勉強の疑問を、わかるまで聞いてみよう。</div></div></div>
+   <div id="ai-chat-log" class="ai-chat-log" role="log" aria-live="polite"><div class="ai-msg bot">こんにちは！STUDIX AI先生だよ。\n問題文や、わからないところを送ってね。できるだけ順番に説明するよ！</div></div>
+   <form id="ai-chat-form" class="ai-chat-form"><textarea id="ai-question" maxlength="4000" placeholder="例：二次方程式 x²−5x+6=0 の解き方を教えて" required></textarea><button type="submit" id="ai-send">質問する</button></form>
+   <p id="ai-chat-status" class="ai-status" role="status" aria-live="polite">質問内容はAIサービスに送信されます。個人情報は入力しないでね。</p>
+  </div>
+  <div class="ai-panel">
+   <div class="ai-heading"><div class="ai-mark" aria-hidden="true">▦</div><div><h3>AI学習計画メーカー</h3><div class="ai-muted" style="margin:2px 0 0">テストまでの予定を組み立てよう。</div></div></div>
+   <form id="ai-plan-form" class="ai-form-grid">
+    <label>テスト日<input type="date" id="ai-exam-date" required></label>
+    <label>教科・試験範囲<textarea id="ai-plan-subjects" rows="3" maxlength="2000" placeholder="例：数学 二次関数 p.30〜55、英語 Lesson 4〜5" required></textarea></label>
+    <label>1日に勉強できる時間<select id="ai-plan-minutes"><option value="30">30分</option><option value="60" selected>1時間</option><option value="90">1時間30分</option><option value="120">2時間</option><option value="180">3時間</option><option value="240">4時間</option></select></label>
+    <label>苦手なところ・希望（任意）<textarea id="ai-plan-notes" rows="2" maxlength="1000" placeholder="例：数学が苦手。前日は軽い復習にしたい。"></textarea></label>
+    <button type="submit" id="ai-plan-generate">計画を作る</button>
+   </form>
+   <p id="ai-plan-status" class="ai-status" role="status" aria-live="polite"></p>
+   <div id="ai-plan-preview" class="ai-preview"></div>
+   <div class="ai-actions"><button type="button" id="ai-plan-add" hidden>この計画をSTUDIXに追加</button><button type="button" class="g" id="ai-plan-clear" hidden>プレビューを消す</button></div>
+   <p class="ai-disclaimer">AIの回答や計画には間違いが含まれることがあります。追加する前に内容を確認してください。生成した計画は、このブラウザーのSTUDIX内に保存されます。</p>
+  </div>
+ </div>
+</section>
+
 <section id="memos" class="view" hidden>
 <div class="page-intro"><div><h2 class="pt">メモ</h2><p>ひらめきも、忘れたくないことも、ここに残そう。</p></div><svg class="page-art" viewBox="0 0 140 110" aria-hidden="true"><ellipse cx="72" cy="98" rx="48" ry="6" fill="#e6d4f5"/><g transform="rotate(-8 60 54)"><rect x="28" y="20" width="62" height="67" rx="7" fill="#ffd66f"/><rect x="35" y="27" width="62" height="67" rx="7" fill="#fff" stroke="#e7d8f2" stroke-width="2"/><path d="M47 43h38M47 54h31M47 65h36M47 76h24" stroke="#d8cde5" stroke-width="3" stroke-linecap="round"/><path d="M45 19l12 3-6 15-12-3Z" fill="#f19aa9"/></g><path d="M99 26l7-12 7 12-7 4Z" fill="#b9a1f0"/><path d="M107 31l-7 34" stroke="#b9a1f0" stroke-width="5" stroke-linecap="round"/><path d="M106 65l-8 10 2-13Z" fill="#f2ad77"/><path d="M113 76l3-7 3 7 7 3-7 3-3 7-3-7-7-3Z" fill="#f4c66d"/></svg></div>
 <div class="stack">
@@ -824,38 +879,6 @@ input,select,textarea{background:var(--card);border-color:var(--bd)}
    <div class="w"><h3>集中モードの使い方</h3><p class="focus-tip">①課題を選ぶ → ②時間を決める → ③開始。終了すると学習記録に時間が追加されるよ。途中で終了した場合も、実際に集中した時間を記録できるよ。</p></div>
   </div>
  </div>
-</section>
-
-
-<section id="notifications" class="view" hidden>
- <div class="page-intro"><div><h2 class="pt">通知設定</h2><p>締切を忘れず、毎日の勉強を習慣にしよう。</p></div></div>
- <div class="w" style="margin-bottom:16px">
-  <h3>プッシュ通知</h3>
-  <p style="color:var(--sub);line-height:1.7">通知を許可すると、STUDIXを閉じているときも対応ブラウザーから通知を受け取れるようになるよ。最初にサーバー設定が必要です。</p>
-  <div class="row" style="align-items:center;flex-wrap:wrap"><button type="button" id="push-enable">通知を有効にする</button><button type="button" class="g" id="push-test">テスト通知</button><button type="button" class="g" id="push-disable">この端末の通知を停止</button></div>
-  <p id="push-status" role="status" aria-live="polite" style="margin:12px 0 0;color:var(--sub)">未設定</p>
- </div>
- <div class="w" style="margin-bottom:16px">
-  <h3>締切通知</h3>
-  <p style="color:var(--sub)">未完了の課題と登録したテスト日程を対象にするよ。</p>
-  <label style="display:flex;gap:10px;align-items:center;margin:12px 0"><input id="push-deadline-enabled" type="checkbox" checked style="width:auto">締切通知を有効にする</label>
-  <label style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">通知タイミング
-   <select id="push-deadline-days" style="max-width:260px"><option value="0">締切当日</option><option value="1" selected>前日と当日</option><option value="3">3日前・前日・当日</option></select>
-  </label>
- </div>
- <div class="w" style="margin-bottom:16px">
-  <h3>毎日の勉強リマインド</h3>
-  <label style="display:flex;gap:10px;align-items:center;margin:12px 0"><input id="push-daily-enabled" type="checkbox" checked style="width:auto">毎日のリマインドを有効にする</label>
-  <label style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">通知時刻
-   <select id="push-daily-time" style="max-width:180px"></select>
-  </label>
-  <div style="margin-top:14px"><span style="font-weight:700">通知する曜日</span><div class="row" style="gap:12px;flex-wrap:wrap;margin-top:8px" id="push-weekdays">
-   <label><input type="checkbox" value="1" checked style="width:auto">月</label><label><input type="checkbox" value="2" checked style="width:auto">火</label><label><input type="checkbox" value="3" checked style="width:auto">水</label><label><input type="checkbox" value="4" checked style="width:auto">木</label><label><input type="checkbox" value="5" checked style="width:auto">金</label><label><input type="checkbox" value="6" style="width:auto">土</label><label><input type="checkbox" value="0" style="width:auto">日</label>
-  </div></div>
-  <label style="display:flex;flex-direction:column;gap:6px;margin-top:14px">通知メッセージ<input id="push-daily-message" type="text" maxlength="100" value="今日も少しずつ勉強しよう！" style="width:100%;max-width:520px"></label>
-  <div class="row" style="margin-top:16px"><button type="button" id="push-save-settings">設定を保存</button></div>
- </div>
- <div class="w"><h3>設定状況</h3><p style="color:var(--sub);line-height:1.7;margin-bottom:0">通知を実際に配信するには、別途Cloudflare Worker・D1・VAPIDキーの設定が必要です。セットアップ手順は同梱のREADMEを確認してね。</p></div>
 </section>
 
 </main>
@@ -895,7 +918,7 @@ let S={plans:[],tasks:[],logs:[],memos:[],scores:[],schedules:[]};
 try{S=Object.assign(S,JSON.parse(localStorage.getItem('sb')||'{}'))}catch(e){}
 if(!Array.isArray(S.scores))S.scores=[];
 if(!Array.isArray(S.schedules))S.schedules=[];
-const save=()=>{try{localStorage.setItem('sb',JSON.stringify(S));window.dispatchEvent(new CustomEvent('studix:data-saved'))}catch(e){}};
+const save=()=>{try{localStorage.setItem('sb',JSON.stringify(S))}catch(e){}};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const ymd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const today=()=>ymd(new Date());
@@ -1184,6 +1207,53 @@ $('#focus-finish').addEventListener('click',()=>{if(focusElapsed()<60){focusStat
 $('#focus-task').addEventListener('change',focusTaskChanged);
 $('#focus-custom-min').value=30;focusUpdate();
 
+
+// STUDIX AI client. API endpoint is a Cloudflare Worker URL configured below.
+const STUDIX_AI_ENDPOINT = 'PASTE_YOUR_CLOUDFLARE_WORKER_URL_HERE';
+let aiDraftPlans=[];
+let aiConversationId='';
+const aiLog=$('#ai-chat-log'),aiQuestion=$('#ai-question'),aiSend=$('#ai-send');
+function aiAppendMessage(text,role){const el=document.createElement('div');el.className='ai-msg '+(role==='user'?'user':'bot');el.textContent=text;aiLog.appendChild(el);aiLog.scrollTop=aiLog.scrollHeight;return el}
+async function studixAI(payload){
+ if(!STUDIX_AI_ENDPOINT||STUDIX_AI_ENDPOINT.includes('PASTE_YOUR_'))throw new Error('AI接続先がまだ設定されていません。READMEの手順でWorker URLを設定してね。');
+ const res=await fetch(STUDIX_AI_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+ let data={};try{data=await res.json()}catch(e){}
+ if(!res.ok)throw new Error(data.error||`AIへの接続に失敗しました（${res.status}）。少し待ってから試してね。`);
+ return data;
+}
+$('#ai-chat-form').addEventListener('submit',async e=>{
+ e.preventDefault();const question=aiQuestion.value.trim();if(!question)return;
+ aiAppendMessage(question,'user');aiQuestion.value='';aiSend.disabled=true;$('#ai-chat-status').textContent='AI先生が考えています…';
+ try{const data=await studixAI({mode:'chat',question,conversation_id:aiConversationId});if(data.conversation_id)aiConversationId=data.conversation_id;aiAppendMessage(data.answer||'回答を取得できませんでした。もう一度試してね。','bot');$('#ai-chat-status').textContent='回答しました。必要なら続けて質問できるよ。'}
+ catch(err){aiAppendMessage('ごめんね、回答を取得できなかったよ。\n'+err.message,'bot');$('#ai-chat-status').textContent='接続エラー。設定や利用上限を確認してね。'}
+ finally{aiSend.disabled=false;aiQuestion.focus()}
+});
+$('#ai-exam-date').value=ymd(addD(new Date(),14));
+$('#ai-plan-form').addEventListener('submit',async e=>{
+ e.preventDefault();const examDate=$('#ai-exam-date').value,subjects=$('#ai-plan-subjects').value.trim(),minutes=Number($('#ai-plan-minutes').value),notes=$('#ai-plan-notes').value.trim();
+ if(!examDate||!subjects)return;const daysLeft=days(examDate);if(daysLeft<0){$('#ai-plan-status').textContent='テスト日は今日以降の日付にしてね。';return}if(daysLeft>60){$('#ai-plan-status').textContent='まずは60日以内のテストで計画を作ろう。';return}
+ const btn=$('#ai-plan-generate');btn.disabled=true;$('#ai-plan-add').hidden=true;$('#ai-plan-clear').hidden=true;$('#ai-plan-preview').innerHTML='';$('#ai-plan-status').textContent='テスト日程に合わせて計画を作っています…';
+ try{
+  const data=await studixAI({mode:'plan',examDate,subjects,minutesPerDay:minutes,notes,today:today()});
+  const plans=Array.isArray(data.plans)?data.plans:[];
+  aiDraftPlans=plans.map(p=>({date:String(p.date||''),start:String(p.start||''),end:String(p.end||''),subject:String(p.subject||''),task:String(p.task||'復習')})).filter(p=>/^\d{4}-\d{2}-\d{2}$/.test(p.date)&&p.date>=today()&&p.date<=examDate&&p.task.trim()).slice(0,60);
+  if(!aiDraftPlans.length)throw new Error('有効な計画を作れませんでした。教科・範囲を少し具体的にして再試行してね。');
+  $('#ai-plan-preview').innerHTML=aiDraftPlans.map(p=>`<div class="ai-plan-row"><strong>${esc(p.date)} ・ ${esc(p.task)}</strong><small>${esc(p.subject||'教科未設定')}${p.start&&p.end?' ・ '+esc(p.start)+'〜'+esc(p.end):''}</small></div>`).join('');
+  $('#ai-plan-status').textContent=`${aiDraftPlans.length}件の計画を作成したよ。追加前に内容を確認してね。`;
+  $('#ai-plan-add').hidden=false;$('#ai-plan-clear').hidden=false;
+ }catch(err){$('#ai-plan-status').textContent='計画を作れませんでした：'+err.message}
+ finally{btn.disabled=false}
+});
+$('#ai-plan-add').addEventListener('click',()=>{
+ if(!aiDraftPlans.length)return;
+ const existing=S.plans.filter(p=>p.date).map(p=>p.date+'|'+p.t);
+ const records=aiDraftPlans.filter(p=>!existing.includes(p.date+'|'+p.task)).map(p=>({id:Date.now().toString(36)+Math.random().toString(36).slice(2,7),s:p.date===today()?'day':'week',t:p.task+(p.subject?'（'+p.subject+'）':''),date:p.date,start:p.start,end:p.end}));
+ if(!records.length){$('#ai-plan-status').textContent='同じ内容の計画はすでに登録されているみたい。';return}
+ S.plans.push(...records);save();render();$('#ai-plan-status').textContent=`${records.length}件をSTUDIXの計画に追加したよ！「計画」から確認してね。`;$('#ai-plan-add').hidden=true;
+});
+$('#ai-plan-clear').addEventListener('click',()=>{aiDraftPlans=[];$('#ai-plan-preview').innerHTML='';$('#ai-plan-add').hidden=true;$('#ai-plan-clear').hidden=true;$('#ai-plan-status').textContent='プレビューを消しました。'});
+
+
 let cur=today();
 function clock(){
  const n=new Date();
@@ -1242,35 +1312,6 @@ studixInstallButton.addEventListener('click', async ()=>{
 if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
   window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));
 }
-</script>
-<script>
-// STUDIX Web Push client. Set this to the deployed Worker URL in push-config.js / below.
-window.STUDIX_PUSH_API = window.STUDIX_PUSH_API || 'https://studix-push-api.studix-app.workers.dev';
-(()=>{
- const $p=id=>document.getElementById(id), API=()=>String(window.STUDIX_PUSH_API||'').replace(/\/$/,'');
- const KEY='studixPushPrefsV1', DEVICE='studixPushDeviceV1';
- const defaults={deadlineEnabled:true,deadlineDays:1,dailyEnabled:true,dailyTime:'19:00',weekdays:[1,2,3,4,5],dailyMessage:'今日も少しずつ勉強しよう！'};
- let prefs={...defaults}; try{prefs={...prefs,...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch(e){}
- function device(){let d;try{d=JSON.parse(localStorage.getItem(DEVICE)||'null')}catch(e){} if(!d||!d.id||!d.token){d={id:crypto.randomUUID(),token:crypto.randomUUID()+crypto.randomUUID()};localStorage.setItem(DEVICE,JSON.stringify(d))}return d}
- function status(s){const e=$p('push-status');if(e)e.textContent=s}
- function apiReady(){return API()&&!API().includes('YOUR-WORKER')}
- function b64urlBytes(s){const pad='='.repeat((4-s.length%4)%4);const b=atob((s+pad).replace(/-/g,'+').replace(/_/g,'/'));return Uint8Array.from(b,c=>c.charCodeAt(0))}
- async function request(path,body,method='POST'){const d=device();const r=await fetch(API()+path,{method,headers:{'Content-Type':'application/json','X-Device-Id':d.id,'X-Device-Token':d.token},...(body===undefined?{}:{body:JSON.stringify(body)})});let data={};try{data=await r.json()}catch(e){}if(!r.ok)throw new Error(data.error||`サーバーエラー (${r.status})`);return data}
- function readForm(){prefs.deadlineEnabled=$p('push-deadline-enabled').checked;prefs.deadlineDays=Number($p('push-deadline-days').value);prefs.dailyEnabled=$p('push-daily-enabled').checked;prefs.dailyTime=$p('push-daily-time').value;prefs.weekdays=[...document.querySelectorAll('#push-weekdays input:checked')].map(x=>Number(x.value));prefs.dailyMessage=$p('push-daily-message').value.trim()||defaults.dailyMessage;localStorage.setItem(KEY,JSON.stringify(prefs));return prefs}
- function fillForm(){ $p('push-deadline-enabled').checked=!!prefs.deadlineEnabled;$p('push-deadline-days').value=String(prefs.deadlineDays??1);$p('push-daily-enabled').checked=!!prefs.dailyEnabled;$p('push-daily-time').value=prefs.dailyTime||'19:00';$p('push-daily-message').value=prefs.dailyMessage||defaults.dailyMessage;document.querySelectorAll('#push-weekdays input').forEach(x=>x.checked=(prefs.weekdays||defaults.weekdays).includes(Number(x.value))); }
- function initTimes(){const s=$p('push-daily-time');for(let h=5;h<=23;h++){const v=String(h).padStart(2,'0')+':00';const o=document.createElement('option');o.value=v;o.textContent=v;s.appendChild(o)}}
- function syncData(){let data={};try{data=JSON.parse(localStorage.getItem('sb')||'{}')}catch(e){};return {tasks:(Array.isArray(data.tasks)?data.tasks:[]).map(t=>({id:String(t.id),title:String(t.t||'課題'),due:String(t.due||''),completed:false})).filter(t=>t.due),schedules:(Array.isArray(data.schedules)?data.schedules:[]).map(s=>({id:String(s.id),title:String(s.name||'テスト日程'),date:String(s.date||''),type:String(s.type||'test')})).filter(s=>s.date),settings:prefs,timezone:'Asia/Tokyo'}}
- async function sync(){if(!apiReady()||Notification.permission!=='granted')return;try{await request('/sync',syncData())}catch(e){status('サーバー同期に失敗しました：'+e.message)}}
- async function enable(){if(!apiReady()){status('まだサーバーURLが設定されていません。READMEの「公開設定」を先に完了してね。');return}if(!('serviceWorker'in navigator)||!('PushManager'in window)||!('Notification'in window)){status('このブラウザーはプッシュ通知に対応していません。');return}try{const permission=await Notification.requestPermission();if(permission!=='granted'){status('通知が許可されませんでした。ブラウザーのサイト設定を確認してね。');return}const reg=await navigator.serviceWorker.ready;const key=await request('/vapid-public-key',undefined,'GET');const sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64urlBytes(key.publicKey)});await request('/subscribe',{subscription:sub.toJSON(),...syncData()});status('通知を有効にしました。この端末でテスト通知を受け取れるよ。');await sync()}catch(e){status('通知の有効化に失敗しました：'+e.message)}}
- async function test(){if(!apiReady()){status('サーバーURLが未設定です。READMEの公開設定を先に行ってね。');return}try{await request('/test',{});status('テスト通知を送信しました。届くまで少し待ってね。')}catch(e){status('テスト通知に失敗しました：'+e.message)}}
- async function disable(){if(!apiReady()){status('サーバーURLが未設定です。');return}try{const reg=await navigator.serviceWorker.ready;const sub=await reg.pushManager.getSubscription();if(sub)await sub.unsubscribe();await request('/unsubscribe',{});status('この端末の通知を停止しました。')}catch(e){status('停止処理に失敗しました：'+e.message)}}
- initTimes();fillForm();
- $p('push-enable').addEventListener('click',enable);$p('push-test').addEventListener('click',test);$p('push-disable').addEventListener('click',disable);
- $p('push-save-settings').addEventListener('click',async()=>{readForm();if(apiReady()&&Notification.permission==='granted'){try{await request('/settings',{settings:prefs});await sync();status('通知設定を保存しました。')}catch(e){status('設定を保存できませんでした：'+e.message)}}else status('設定をこの端末に保存しました。プッシュ配信には通知の有効化とサーバー設定が必要です。')});
- window.addEventListener('studix:data-saved',()=>{if(window.__studixPushSyncTimer)clearTimeout(window.__studixPushSyncTimer);window.__studixPushSyncTimer=setTimeout(sync,1500)});
- // Sync on startup and periodically so edits made elsewhere in the app reach the scheduler.
- window.addEventListener('load',()=>{sync();setInterval(sync,60000)});
-})();
 </script>
 
 </body></html>

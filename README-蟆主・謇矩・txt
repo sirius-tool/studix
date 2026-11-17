@@ -1,0 +1,41 @@
+STUDIX AI — 都立AI API対応版
+
+このパッケージは既存のSTUDIXに「AI先生」と「AI学習計画メーカー」を追加するスターターです。都立AI APIへの接続はCloudflare Worker経由で行います。
+
+1. 重要：APIキーを安全に扱う
+- APIキーはHTML、JavaScript、GitHubリポジトリに書かないでください。
+- Cloudflare WorkerのSecretとして登録します。
+- APIキーをチャット、SNS、公開ファイルなどに貼ってしまった場合は、発行元で無効化して再発行してください。
+
+2. Cloudflare Workerを作成
+- CloudflareのWorkers & PagesからWorkerを新規作成します。
+- cloudflare-worker.jsの内容をWorkerのコードに貼り付けてデプロイします。
+- WorkerのSettings → Variables and SecretsでSecretを追加します。
+  Name: TORITSU_AI_API_KEY
+  Value: 都立AIで発行したAPIキー
+- Secret登録後、Workerを再デプロイしてください。
+
+3. STUDIX本体の接続先を設定
+- WorkerのURLをコピーします。
+- index.html内の次の行を探します。
+  const STUDIX_AI_ENDPOINT = 'PASTE_YOUR_CLOUDFLARE_WORKER_URL_HERE';
+- プレースホルダーをWorker URLに置き換えます。
+
+4. GitHub Pagesへ反映
+- index.html、manifest.json、service-worker.jsを既存リポジトリに配置します。
+- icons/icon-192.pngとicons/icon-512.pngは既存のものを残してください。
+- GitHub Pagesへ反映後、AI先生とAI学習計画メーカーをテストします。
+
+接続仕様
+- POST https://ai-api.metro.tokyo.lg.jp/api/v1/public/message
+- Authorization: Bearer <APIキー>
+- JSON body: {"input":"...", "conversation_id":"..."}
+- 回答: message
+- 会話ID: response.conversation.id
+
+注意
+- このWorkerはCORSの許可元を https://sirius-tool.github.io に限定しています。
+- API利用条件・有効期限・利用上限は都立AIの案内に従ってください。
+- 一般公開前には不正利用防止のため、認証やレート制限を追加してください。現状のWorkerだけでは第三者による大量利用を完全には防げません。
+- AIの回答や学習計画は誤ることがあります。内容を確認して利用してください。
+- 学校の機密情報、個人情報、パスワードなどを入力しないよう利用者に案内してください。
